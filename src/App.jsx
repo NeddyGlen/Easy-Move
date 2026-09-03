@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LogoImg from "./assets/Logo.png";
 import {
   Truck,
@@ -78,21 +78,21 @@ const STEPS = [
 
 const LOCATIONS = [
   {
-    title: "Dubai Movers",
-    body: "Full local moves across top neighborhoods with dedicated villa teams.",
-    tags: ["Dubai Marina", "Downtown", "Palm Jumeirah", "Jumeirah", "DIFC", "Mirdif"],
-    cta: "Book Dubai Movers",
+    title: "London Movers",
+    body: "Full local moves across top neighborhoods with dedicated flat and house teams.",
+    tags: ["Central London", "East London", "West London", "North London", "South London", "Canary Wharf"],
+    cta: "Book London Movers",
   },
   {
-    title: "Abu Dhabi Relocation",
-    body: "Inter-emirate moving specialists connecting Dubai and Abu Dhabi hourly.",
-    tags: ["Yas Island", "Al Reem", "Saadiyat", "Khalifa City", "Corniche"],
-    cta: "Book Abu Dhabi Movers",
+    title: "Manchester Relocation",
+    body: "Inter-city moving specialists connecting Manchester and surrounding areas hourly.",
+    tags: ["Manchester City Centre", "Salford", "Stockport", "Trafford", "Oldham"],
+    cta: "Book Manchester Movers",
   },
   {
-    title: "Northern Emirates",
-    body: "Reliable freight, delivery, and storage services covering all other states.",
-    tags: ["Sharjah", "Ajman", "Ras Al Khaimah", "Fujairah", "Umm Al Quwain"],
+    title: "National Coverage",
+    body: "Reliable freight, delivery, and storage services covering all UK regions.",
+    tags: ["Birmingham", "Leeds", "Liverpool", "Bristol", "Edinburgh", "Cardiff"],
     cta: "Inquire Service Area",
   },
 ];
@@ -126,7 +126,7 @@ const REVIEWS = [
 
 const PROPERTY_SIZES = ["Studio", "1 Bedroom", "2 Bedroom", "3 Bedroom", "Villa", "Office"];
 
-function Logo({ light }) {
+function Logo() {
   return (
     <div className="flex items-center">
       <img src={LogoImg} alt="Easy Move Logo" className="h-10 w-auto" />
@@ -146,12 +146,27 @@ export default function App() {
     notes: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitError("");
+
+    try {
+      const response = await fetch("/api/quote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Unable to submit your request.");
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(error.message);
+    }
   };
 
   return (
@@ -485,6 +500,7 @@ export default function App() {
             >
               {submitted ? "Request Sent ✓" : "Get My Free Estimate Now"}
             </button>
+            {submitError && <p className="mt-4 text-[12.5px] text-red-600">{submitError}</p>}
             <p className="mt-4 flex items-center gap-1.5 text-[12.5px] text-[#8792A8]">
               🔒 Your details are protected and will never be shared with third parties.
             </p>
