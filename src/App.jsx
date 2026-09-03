@@ -155,7 +155,7 @@ export default function App() {
     setSubmitError("");
 
     try {
-      const response = await fetch("/api/quote", {
+      const response = await fetch("https://easy-move-backend-vrw8.onrender.com/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
