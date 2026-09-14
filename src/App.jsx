@@ -8,7 +8,6 @@ import {
   Home as HomeIcon,
   Phone,
   Mail,
-  MapPin,
   Star,
   Check,
   ChevronDown,
@@ -16,25 +15,18 @@ import {
   X,
   Building2,
   Boxes,
-  Globe2,
   Zap,
-  Gem,
-  Quote,
 } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
   { label: "How it Works", href: "#how-it-works" },
-  { label: "Locations", href: "#locations" },
   { label: "Reviews", href: "#reviews" },
 ];
 
 const STATS = [
-  { value: "10,000+", label: "Successful Moves" },
   { value: "4.9★", label: "Average Rating" },
-  { value: "100%", label: "Damage-Free" },
-  { value: "24/7", label: "Support Team" },
 ];
 
 const SERVICES = [
@@ -51,7 +43,7 @@ const SERVICES = [
   {
     icon: ShieldCheck,
     title: "Safe Transportation",
-    body: "GPS-tracked closed container trucks driven by certified personnel guard your cargo from climate, dust, and shocks.",
+    body: "Closed container trucks driven by certified personnel guard your cargo from climate, dust, and shocks.",
   },
   {
     icon: HomeIcon,
@@ -61,70 +53,54 @@ const SERVICES = [
 ];
 
 const ALL_SERVICES = [
-  { icon: HomeIcon, title: "Residential Moving", body: "Apartments, villas, and townhouse relocations." },
+  { icon: HomeIcon, title: "Residential Moving", body: "Apartments and townhouse relocations." },
   { icon: Building2, title: "Office & Commercial", body: "Corporate offices, IT hardware, and workspaces." },
   { icon: Boxes, title: "Moving & Storage", body: "Secure, climate-controlled storage facilities." },
-  { icon: Globe2, title: "International Relocation", body: "Expert customs handling and global transport." },
   { icon: Zap, title: "Emergency Moving", body: "Same-day or next-day express relocations." },
-  { icon: Gem, title: "Fine Art & Antique", body: "Special white-glove museum-grade handling." },
 ];
 
 const STEPS = [
-  { n: "01", title: "Book Your Move", body: "Get an instant quote online or request a free survey of your villa or apartment." },
+  { n: "01", title: "Book Your Move", body: "Get an instant quote online or request a free survey of your London or Essex property." },
   { n: "02", title: "We Pack for You", body: "Our experienced crew arrives with premium packing materials and packs everything safely." },
-  { n: "03", title: "Secure Transport", body: "Your belongings travel inside our closed container, GPS-tracked fleet." },
-  { n: "04", title: "Place & Unpack", body: "We assemble and arrange your furniture in your new home, taking away the packaging debris." },
-];
-
-const LOCATIONS = [
-  {
-    title: "London Movers",
-    body: "Full local moves across top neighborhoods with dedicated flat and house teams.",
-    tags: ["Central London", "East London", "West London", "North London", "South London", "Canary Wharf"],
-    cta: "Book London Movers",
-  },
-  {
-    title: "Manchester Relocation",
-    body: "Inter-city moving specialists connecting Manchester and surrounding areas hourly.",
-    tags: ["Manchester City Centre", "Salford", "Stockport", "Trafford", "Oldham"],
-    cta: "Book Manchester Movers",
-  },
-  {
-    title: "National Coverage",
-    body: "Reliable freight, delivery, and storage services covering all UK regions.",
-    tags: ["Birmingham", "Leeds", "Liverpool", "Bristol", "Edinburgh", "Cardiff"],
-    cta: "Inquire Service Area",
-  },
-];
-
-const PROMISE = [
-  { title: "Full Packing & Unpacking Included", body: "No need to stress over boxes. We label and wrap every item, and organize your new place completely." },
-  { title: "No Hidden Costs or Toll Surprises", body: "Our upfront quote covers Salik, transport fees, fuel, crew labor, and packing materials." },
-  { title: "Comprehensive Transit Insurance", body: "Accidents are rare, but we fully cover and insure your items against unexpected damages during transit." },
+  { n: "03", title: "Secure Transport", body: "Your belongings travel inside our closed container fleet." },
+  { n: "04", title: "Place & Unpack", body: "We place and arrange your furniture in your new home, taking away the packaging debris." },
 ];
 
 const REVIEWS = [
   {
     name: "Robert Chen",
-    role: "Marina Resident",
+    role: "London Resident",
     stars: 5,
     quote: "Extremely professional. They handled my premium sound system and glass cabinets with absolute care. Highly recommended for premium moves!",
   },
   {
     name: "Amna Al-Shehhi",
-    role: "Khalifa City Resident",
+    role: "Essex Resident",
     stars: 5,
-    quote: "Moving state is always tough but they made our Dubai to Abu Dhabi transition smooth and fast. The cost beat the quote perfectly.",
+    quote: "Moving day is always tough, but they made our London to Essex transition smooth and fast. The quoted cost was clear and fair.",
   },
   {
     name: "Michael Peterson",
     role: "Business Owner",
     stars: 5,
-    quote: "They moved our corporate IT equipment over the weekend. Minimal downtime, zero damage, and clean setup. Terrific job!",
+    quote: "They moved our corporate IT equipment over the weekend. Minimal downtime, clean setup, and excellent care. Terrific job!",
   },
 ];
 
-const PROPERTY_SIZES = ["Studio", "1 Bedroom", "2 Bedroom", "3 Bedroom", "Villa", "Office"];
+const PROPERTY_SIZES = [
+  "Studio",
+  "1 Bedroom",
+  "2 Bedroom",
+  "3 Bedroom",
+  "4 Bedroom",
+  "5 Bedroom",
+  "6 Bedroom",
+  "7 Bedroom",
+  "8 Bedroom",
+  "9 Bedroom",
+  "10 Bedroom",
+  "Office",
+];
 
 function Logo() {
   return (
@@ -146,13 +122,17 @@ export default function App() {
     notes: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
     setSubmitError("");
+    setLoading(true);
 
     try {
       const response = await fetch("https://easy-move-backend-vrw8.onrender.com/api/quote", {
@@ -166,6 +146,8 @@ export default function App() {
       setSubmitted(true);
     } catch (error) {
       setSubmitError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -226,18 +208,18 @@ export default function App() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-2 md:py-20">
           <div>
             <span className="inline-block rounded-full bg-[#E4F0FD] px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-[#1E7FE0]">
-              THE UK'S TRUSTED MOVERS
+              LONDON & ESSEX MOVERS
             </span>
             <h1 className="mt-5 text-[38px] font-extrabold leading-[1.12] text-[#0B1D3A] sm:text-[46px]">
               Moving Made
               <br />
               <span className="text-[#1E7FE0]">Easy</span> Across
               <br />
-              UK
+              England
             </h1>
             <p className="mt-5 max-w-md text-[15.5px] leading-relaxed text-[#5B6785]">
               Easy Move handles everything — specialized packing, secure loading, safe transportation, and precise
-              placement — so you can enjoy a completely hands-free transition.
+              placement — so you can enjoy a smooth transition.
             </p>
 
             <div className="mt-8 grid grid-cols-4 gap-4">
@@ -254,7 +236,7 @@ export default function App() {
                 Get Your Free Quote →
               </button>
               <button className="flex items-center gap-2 rounded-full border border-[#DCE3EE] bg-white px-6 py-3 text-[14.5px] font-semibold text-[#0B1D3A] transition-colors hover:bg-[#F4F8FC]">
-                <Phone className="h-4 w-4" /> Call Us: 800-MOVE
+                <Phone className="h-4 w-4" /> Call Us: +44 7496 876085
               </button>
             </div>
 
@@ -264,9 +246,6 @@ export default function App() {
               </span>
               <span className="flex items-center gap-1.5">
                 <Check className="h-4 w-4 text-[#1E7FE0]" /> Expert Packers
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-[#1E7FE0]" /> No Hidden Fees
               </span>
             </div>
           </div>
@@ -279,14 +258,14 @@ export default function App() {
               <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
               <div className="leading-tight">
                 <div className="text-[12.5px] font-bold text-[#0B1D3A]">5.0 Rating</div>
-                <div className="text-[10.5px] text-[#8792A8]">Trustpilot Verified</div>
+                <div className="text-[10.5px] text-[#8792A8]">Rated by Customers</div>
               </div>
             </div>
             <div className="absolute -bottom-2 right-0 flex items-center gap-2 rounded-2xl bg-white px-3.5 py-2.5 shadow-lg">
               <Truck className="h-4 w-4 text-[#1E7FE0]" />
               <div className="leading-tight">
                 <div className="text-[12.5px] font-bold text-[#0B1D3A]">Active Fleet</div>
-                <div className="text-[10.5px] text-[#8792A8]">All UK Covered</div>
+                <div className="text-[10.5px] text-[#8792A8]">London & Essex</div>
               </div>
             </div>
           </div>
@@ -370,41 +349,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* Locations */}
-      <section id="locations" className="mx-auto max-w-6xl px-5 py-20">
-        <div className="mx-auto max-w-xl text-center">
-          <span className="inline-block rounded-full bg-[#E4F0FD] px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-[#1E7FE0]">
-            WE ARE EVERYWHERE
-          </span>
-          <h2 className="mt-4 text-[30px] font-extrabold text-[#0B1D3A] sm:text-[34px]">We Move Across All UK Areas</h2>
-          <p className="mt-3 text-[15px] leading-relaxed text-[#5B6785]">
-            Whether you are moving next door or across different regions, Easy Move guarantees a seamless transfer.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {LOCATIONS.map((loc) => (
-            <div key={loc.title} className="flex flex-col rounded-2xl border border-[#EDF1F7] bg-[#FAFBFD] p-7">
-              <h3 className="text-[16.5px] font-bold text-[#0B1D3A]">{loc.title}</h3>
-              <p className="mt-2 text-[13.5px] leading-relaxed text-[#5B6785]">{loc.body}</p>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {loc.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-md bg-white px-2.5 py-1 text-[11.5px] font-medium text-[#4B5875] ring-1 ring-[#EDF1F7]"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-              <button className="mt-6 w-fit rounded-full bg-[#1E7FE0] px-5 py-2.5 text-[13.5px] font-semibold text-white transition-colors hover:bg-[#1468BE]">
-                {loc.cta}
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Quote form */}
       <section id="quote" className="bg-[#F4F8FC] py-20">
         <div className="mx-auto max-w-3xl px-5">
@@ -437,7 +381,7 @@ export default function App() {
                   required
                   value={form.phone}
                   onChange={update("phone")}
-                  placeholder="e.g., +971 50 000 0000"
+                  placeholder="e.g., +44 7496 876085"
                   className="input"
                 />
               </Field>
@@ -446,7 +390,7 @@ export default function App() {
                   required
                   value={form.from}
                   onChange={update("from")}
-                  placeholder="Area or building in UK"
+                  placeholder="Area or building in England"
                   className="input"
                 />
               </Field>
@@ -496,9 +440,10 @@ export default function App() {
 
             <button
               type="submit"
-              className="mt-6 w-full rounded-full bg-[#1E7FE0] py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#1468BE] sm:w-auto sm:px-8"
+              disabled={loading}
+              className="mt-6 w-full rounded-full bg-[#1E7FE0] py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#1468BE] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-8"
             >
-              {submitted ? "Request Sent ✓" : "Get My Free Estimate Now"}
+              {loading ? "Sending..." : submitted ? "Request Sent ✓" : "Get My Free Estimate Now"}
             </button>
             {submitError && <p className="mt-4 text-[12.5px] text-red-600">{submitError}</p>}
             <p className="mt-4 flex items-center gap-1.5 text-[12.5px] text-[#8792A8]">
@@ -508,64 +453,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Promise */}
-      <section className="mx-auto max-w-6xl px-5 py-20">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div>
-            <span className="inline-block rounded-full bg-[#E4F0FD] px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-[#1E7FE0]">
-              THE EASY MOVE PROMISE
-            </span>
-            <h2 className="mt-4 text-[28px] font-extrabold leading-tight text-[#0B1D3A] sm:text-[32px]">
-              A Completely Hands-Off Moving Experience
-            </h2>
-            <p className="mt-4 text-[15px] leading-relaxed text-[#5B6785]">
-              Sit back and relax. Our certified team handles every heavy lifting and coordination detail from start
-              to finish.
-            </p>
 
-            <div className="mt-7 space-y-5">
-              {PROMISE.map((p) => (
-                <div key={p.title} className="flex items-start gap-3">
-                  <div className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#E7F6EC]">
-                    <Check className="h-3 w-3 text-[#22A05A]" strokeWidth={3} />
-                  </div>
-                  <div>
-                    <div className="text-[14.5px] font-bold text-[#0B1D3A]">{p.title}</div>
-                    <div className="mt-1 text-[13.5px] leading-relaxed text-[#5B6785]">{p.body}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-5">
-            <div className="flex items-center gap-5 rounded-2xl border border-[#EDF1F7] bg-[#FAFBFD] p-7">
-              <div className="text-[32px] font-extrabold text-[#1E7FE0]">100%</div>
-              <div>
-                <div className="text-[14.5px] font-bold text-[#0B1D3A]">Stress-Free Guarantee</div>
-                <div className="mt-1 text-[13px] leading-relaxed text-[#5B6785]">
-                  Complete refund if you are not fully satisfied with our service quality.
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-2xl bg-[#0B1D3A] p-7 text-white">
-              <Quote className="h-6 w-6 text-[#4C93E0]" />
-              <p className="mt-3 text-[14.5px] italic leading-relaxed text-[#D7E1F2]">
-                "The crew from Easy Move unpacked our 3-bedroom villa in Dubai Hills in less than 5 hours.
-                Outstanding service, completely hands-off as advertised!"
-              </p>
-              <div className="mt-5 flex items-center gap-3">
-                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-[#4C93E0] to-[#1E4E8C]" />
-                <div className="leading-tight">
-                  <div className="text-[13.5px] font-semibold">Ayesha Al-Mansoori</div>
-                  <div className="text-[11.5px] text-[#8FA3C4]">Villa Owner, Dubai Hills</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Reviews */}
       <section id="reviews" className="bg-[#F4F8FC] py-20">
@@ -576,7 +464,7 @@ export default function App() {
             </span>
             <h2 className="mt-4 text-[30px] font-extrabold text-[#0B1D3A] sm:text-[34px]">What Our Customers Say</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-[#5B6785]">
-              Read authentic reviews from families and business owners across UK.
+              Read authentic reviews from families and business owners across London and Essex.
             </p>
           </div>
 
@@ -614,11 +502,10 @@ export default function App() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-3">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2">
           {[
-            { icon: Phone, label: "Call Us Free", value: "800-MOVE (6683)" },
-            { icon: Mail, label: "Email Us", value: "hello@easymove.ae" },
-            { icon: MapPin, label: "Our HQ Location", value: "Marina Plaza, London, UK" },
+            { icon: Phone, label: "Call Us Free", value: "+44 7496 876085" },
+            { icon: Mail, label: "Email Us", value: "hello@easymove.uk" },
           ].map((c) => (
             <div key={c.label} className="rounded-2xl border border-[#EDF1F7] bg-[#FAFBFD] p-7 text-center">
               <div className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-[#E4F0FD]">
@@ -649,8 +536,7 @@ export default function App() {
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <p className="mt-4 max-w-[220px] text-[13px] leading-relaxed">
-                Providing premium, transparent, and completely hands-off residential & commercial relocations across
-                London, Manchester, and all UK regions.
+                Providing premium residential & commercial relocations across London and Essex, England.
               </p>
             </div>
             <div>
@@ -665,23 +551,18 @@ export default function App() {
             <div>
               <h4 className="text-[13.5px] font-bold text-white">Service Areas</h4>
               <ul className="mt-4 space-y-2.5 text-[13px]">
-                <li>Movers in Dubai</li>
-                <li>Movers in Manchester</li>
-                <li>Movers in Birmingham</li>
-                <li>Movers in Leeds</li>
+                <li>London</li>
+                <li>Essex</li>
               </ul>
             </div>
             <div>
               <h4 className="text-[13.5px] font-bold text-white">Contact Us</h4>
               <ul className="mt-4 space-y-2.5 text-[13px]">
                 <li className="flex items-center gap-2">
-                  <Phone className="h-3.5 w-3.5" /> 800-MOVE (6683)
+                  <Phone className="h-3.5 w-3.5" /> +44 7496 876085
                 </li>
                 <li className="flex items-center gap-2">
                   <Mail className="h-3.5 w-3.5" /> hello@easymove.uk
-                </li>
-                <li className="flex items-start gap-2">
-                  <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" /> Marina Plaza, London, UK
                 </li>
               </ul>
             </div>
@@ -689,7 +570,7 @@ export default function App() {
         </div>
         <div className="border-t border-white/10 px-5 py-5">
           <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 text-[12px] sm:flex-row">
-            <span>© 2026 Easy Move UK. All rights reserved.</span>
+            <span>© 2026 Easy Move England. All rights reserved.</span>
             <div className="flex gap-5">
               <span>Privacy Policy</span>
               <span>Terms & Conditions</span>
