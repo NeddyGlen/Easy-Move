@@ -65,5 +65,5 @@ const server = createServer(async (request, response) => {
 });
 
 server.listen(port, () => {
-  console.log(`Easy Move API listening on http://localhost:${port}`);
+  console.log(`Light touch removals API listening on http://localhost:${port}`);
 });

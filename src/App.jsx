@@ -105,7 +105,7 @@ const PROPERTY_SIZES = [
 function Logo() {
   return (
     <div className="flex items-center">
-      <img src={LogoImg} alt="Easy Move Logo" className="h-10 w-auto" />
+      <img src={LogoImg} alt="Light touch removals Logo" className="h-10 w-auto" />
     </div>
   );
 }
@@ -211,15 +211,15 @@ export default function App() {
               LONDON & ESSEX MOVERS
             </span>
             <h1 className="mt-5 text-[38px] font-extrabold leading-[1.12] text-[#0B1D3A] sm:text-[46px]">
-              Moving Made
+              Moving with
               <br />
-              <span className="text-[#1E7FE0]">Easy</span> Across
+              <span className="text-[#1E7FE0]">Light touch removals</span>
               <br />
-              England
+              across England
             </h1>
             <p className="mt-5 max-w-md text-[15.5px] leading-relaxed text-[#5B6785]">
-              Easy Move handles everything — specialized packing, secure loading, safe transportation, and precise
-              placement — so you can enjoy a smooth transition.
+              Light touch removals handles everything — specialized packing, secure loading, safe transportation, and
+              precise placement — so you can enjoy a smooth transition.
             </p>
 
             <div className="mt-8 grid grid-cols-4 gap-4">
@@ -570,7 +570,7 @@ export default function App() {
         </div>
         <div className="border-t border-white/10 px-5 py-5">
           <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 text-[12px] sm:flex-row">
-            <span>© 2026 Easy Move England. All rights reserved.</span>
+            <span>© 2026 Light touch removals England. All rights reserved.</span>
             <div className="flex gap-5">
               <span>Privacy Policy</span>
               <span>Terms & Conditions</span>
