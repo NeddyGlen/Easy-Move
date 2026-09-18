@@ -1,5 +1,4 @@
 import { useState } from "react";
-import LogoImg from "./assets/Logo.png";
 import {
   Truck,
   Package,
@@ -105,7 +104,7 @@ const PROPERTY_SIZES = [
 function Logo() {
   return (
     <div className="flex items-center">
-      <img src={LogoImg} alt="Light touch removals Logo" className="h-10 w-auto" />
+      <img src="/Light touch removals.jpeg" alt="Light touch removals Logo" className="h-12 w-auto" />
     </div>
   );
 }
@@ -252,7 +251,11 @@ export default function App() {
 
           <div className="relative mx-auto w-full max-w-sm">
             <div className="overflow-hidden rounded-[40%] border-8 border-white shadow-xl">
-              <div className="aspect-square bg-gradient-to-br from-[#2A4A7A] to-[#0B1D3A]" />
+              <img
+                src="/Light touch removals.jpeg"
+                alt="Light touch removals logo"
+                className="aspect-square h-full w-full object-cover"
+              />
             </div>
             <div className="absolute -left-4 top-6 flex items-center gap-2 rounded-2xl bg-white px-3.5 py-2.5 shadow-lg">
               <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
