@@ -231,12 +231,18 @@ export default function App() {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <button className="rounded-full bg-[#1E7FE0] px-6 py-3 text-[14.5px] font-semibold text-white shadow-sm shadow-blue-200 transition-colors hover:bg-[#1468BE]">
+              <a
+                href="#quote"
+                className="rounded-full bg-[#1E7FE0] px-6 py-3 text-[14.5px] font-semibold text-white shadow-sm shadow-blue-200 transition-colors hover:bg-[#1468BE]"
+              >
                 Get Your Free Quote →
-              </button>
-              <button className="flex items-center gap-2 rounded-full border border-[#DCE3EE] bg-white px-6 py-3 text-[14.5px] font-semibold text-[#0B1D3A] transition-colors hover:bg-[#F4F8FC]">
+              </a>
+              <a
+                href="tel:+447496876085"
+                className="flex items-center gap-2 rounded-full border border-[#DCE3EE] bg-white px-6 py-3 text-[14.5px] font-semibold text-[#0B1D3A] transition-colors hover:bg-[#F4F8FC]"
+              >
                 <Phone className="h-4 w-4" /> Call Us: +44 7496 876085
-              </button>
+              </a>
             </div>
 
             <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-[#5B6785]">
@@ -507,16 +513,20 @@ export default function App() {
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2">
           {[
-            { icon: Phone, label: "Call Us Free", value: "+44 7496 876085" },
-            { icon: Mail, label: "Email Us", value: "hello@easymove.uk" },
+            { icon: Phone, label: "Call Us Free", value: "+44 7496 876085", href: "tel:+447496876085" },
+            { icon: Mail, label: "Email Us", value: "infolightouchmove@gmail.com", href: "mailto:infolightouchmove@gmail.com" },
           ].map((c) => (
-            <div key={c.label} className="rounded-2xl border border-[#EDF1F7] bg-[#FAFBFD] p-7 text-center">
+            <a
+              key={c.label}
+              href={c.href}
+              className="rounded-2xl border border-[#EDF1F7] bg-[#FAFBFD] p-7 text-center transition-colors hover:border-[#D6E6FA] hover:bg-[#F5F9FF]"
+            >
               <div className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-[#E4F0FD]">
                 <c.icon className="h-5 w-5 text-[#1E7FE0]" />
               </div>
               <div className="mt-4 text-[13px] font-medium text-[#8792A8]">{c.label}</div>
               <div className="mt-1 text-[15px] font-bold text-[#0B1D3A]">{c.value}</div>
-            </div>
+            </a>
           ))}
         </div>
 
