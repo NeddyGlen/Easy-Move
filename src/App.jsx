@@ -520,17 +520,6 @@ export default function App() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-2xl bg-[#0B1D3A] px-7 py-6 sm:flex-row">
-          <div>
-            <div className="text-[15px] font-bold text-white">Need to Move Urgently?</div>
-            <div className="mt-1 text-[13px] text-[#8FA3C4]">
-              We offer same-day emergency relocations depending on crew availability.
-            </div>
-          </div>
-          <button className="flex shrink-0 items-center gap-2 rounded-full bg-[#F5A623] px-6 py-3 text-[14px] font-semibold text-[#0B1D3A] transition-colors hover:bg-[#E5971A]">
-            <Zap className="h-4 w-4" /> Book Express Move
-          </button>
-        </div>
       </section>
 
       {/* Footer */}
