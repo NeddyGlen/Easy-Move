@@ -564,7 +564,7 @@ export default function App() {
                   <Phone className="h-3.5 w-3.5" /> +44 7496 876085
                 </li>
                 <li className="flex items-center gap-2">
-                  <Mail className="h-3.5 w-3.5" /> hello@easymove.uk
+                  <Mail className="h-3.5 w-3.5" /> infolightouchmove@gmail.com
                 </li>
               </ul>
             </div>
