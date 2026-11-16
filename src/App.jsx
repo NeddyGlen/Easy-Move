@@ -15,6 +15,9 @@ import {
   Building2,
   Boxes,
   Zap,
+  School,
+  Stethoscope,
+  Sparkles,
 } from "lucide-react";
 
 const NAV_LINKS = [
@@ -56,6 +59,24 @@ const ALL_SERVICES = [
   { icon: Building2, title: "Office & Commercial", body: "Corporate offices, IT hardware, and workspaces." },
   { icon: Boxes, title: "Moving & Storage", body: "Secure, climate-controlled storage facilities." },
   { icon: Zap, title: "Emergency Moving", body: "Same-day or next-day express relocations." },
+];
+
+const CLEANING_SERVICES = [
+  {
+    icon: School,
+    title: "Schools, Nurseries & Colleges",
+    body: "Reliable cleaning for classrooms, shared spaces, washrooms, and other learning environments.",
+  },
+  {
+    icon: Building2,
+    title: "Office Buildings",
+    body: "Keep workspaces, meeting rooms, kitchens, and common areas clean and welcoming.",
+  },
+  {
+    icon: Stethoscope,
+    title: "Medical Surgeries",
+    body: "Cleaning for reception areas, waiting rooms, and clinical spaces, arranged around your site's requirements.",
+  },
 ];
 
 const STEPS = [
@@ -311,6 +332,40 @@ export default function App() {
           ))}
         </div>
 
+        <div className="mt-16 rounded-3xl bg-[#F4F8FC] px-6 py-10 sm:px-9">
+          <div className="mx-auto max-w-xl text-center">
+            <span className="inline-block rounded-full bg-[#E4F0FD] px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-[#1E7FE0]">
+              COMMERCIAL CLEANING
+            </span>
+            <h3 className="mt-4 text-[26px] font-extrabold text-[#0B1D3A] sm:text-[30px]">
+              Cleaning for Workplaces & Institutions
+            </h3>
+            <p className="mt-3 text-[15px] leading-relaxed text-[#5B6785]">
+              Flexible cleaning services for education, office, and healthcare environments. Get in touch to discuss
+              your site and schedule.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {CLEANING_SERVICES.map((s) => (
+              <div key={s.title} className="rounded-2xl border border-[#EDF1F7] bg-white p-6">
+                <div className="grid h-11 w-11 place-items-center rounded-xl bg-[#E4F0FD]">
+                  <s.icon className="h-5 w-5 text-[#1E7FE0]" />
+                </div>
+                <h4 className="mt-4 text-[16px] font-bold text-[#0B1D3A]">{s.title}</h4>
+                <p className="mt-2 text-[14px] leading-relaxed text-[#5B6785]">{s.body}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-7 text-center">
+            <a
+              href="mailto:infolightouchmove@gmail.com?subject=Commercial%20Cleaning%20Enquiry"
+              className="inline-flex items-center gap-2 rounded-full bg-[#1E7FE0] px-6 py-3 text-[14.5px] font-semibold text-white transition-colors hover:bg-[#1468BE]"
+            >
+              <Sparkles className="h-4 w-4" /> Ask About Cleaning
+            </a>
+          </div>
+        </div>
+
         <div className="mt-16">
           <h3 className="text-center text-[19px] font-bold text-[#0B1D3A]">Explore All Moving Services</h3>
           <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -538,16 +593,24 @@ export default function App() {
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <p className="mt-4 max-w-[220px] text-[13px] leading-relaxed">
-                Providing premium residential & commercial relocations across London and Essex, England.
+                Providing removals and commercial cleaning services across London and Essex, England.
               </p>
             </div>
             <div>
-              <h4 className="text-[13.5px] font-bold text-white">Our Services</h4>
+              <h4 className="text-[13.5px] font-bold text-white">Moving Services</h4>
               <ul className="mt-4 space-y-2.5 text-[13px]">
                 <li>Residential Moving</li>
                 <li>Office & Corporate Moving</li>
                 <li>Climate Storage</li>
                 <li>Specialized Packing</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-[13.5px] font-bold text-white">Cleaning Services</h4>
+              <ul className="mt-4 space-y-2.5 text-[13px]">
+                <li>Schools, Nurseries & Colleges</li>
+                <li>Office Buildings</li>
+                <li>Medical Surgeries</li>
               </ul>
             </div>
             <div>
