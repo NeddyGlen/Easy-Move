@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Truck,
   Package,
@@ -21,10 +21,10 @@ import {
 } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "How it Works", href: "#how-it-works" },
-  { label: "Reviews", href: "#reviews" },
+  { label: "Home", href: "/" },
+  { label: "Removals", href: "/moving" },
+  { label: "Cleaning", href: "/cleaning" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const STATS = [
@@ -124,13 +124,67 @@ const PROPERTY_SIZES = [
 
 function Logo() {
   return (
-    <div className="flex items-center">
+    <a href="/" className="flex items-center" aria-label="Light touch removals home">
       <img src="/Light touch removals.jpeg" alt="Light touch removals Logo" className="h-12 w-auto" />
-    </div>
+    </a>
+  );
+}
+
+function PageHero({ eyebrow, title, description, actionLabel, actionHref, icon: Icon }) {
+  return (
+    <section className="bg-[#F4F8FC]">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-14 md:grid-cols-[1fr_auto] md:py-16">
+        <div>
+          <span className="inline-block rounded-full bg-[#E4F0FD] px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-[#1E7FE0]">
+            {eyebrow}
+          </span>
+          <h1 className="mt-4 max-w-3xl text-[34px] font-extrabold leading-tight text-[#0B1D3A] sm:text-[42px]">
+            {title}
+          </h1>
+          <p className="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-[#5B6785]">{description}</p>
+          <a
+            href={actionHref}
+            className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#1E7FE0] px-6 py-3 text-[14.5px] font-semibold text-white transition-colors hover:bg-[#1468BE]"
+          >
+            {actionLabel} →
+          </a>
+        </div>
+        <div className="hidden h-36 w-36 place-items-center rounded-[2rem] border-8 border-white bg-[#E4F0FD] shadow-lg md:grid">
+          <Icon className="h-16 w-16 text-[#1E7FE0]" aria-hidden="true" />
+        </div>
+      </div>
+    </section>
   );
 }
 
 export default function App() {
+  const page = window.location.pathname.replace(/\/+$/, "") || "/";
+  const pageHero = {
+    "/moving": {
+      eyebrow: "MOVING & REMOVALS",
+      title: "A smoother move starts here",
+      description: "From careful packing to safe transport and placement, our team is ready to help with your next move.",
+      actionLabel: "Get a Free Quote",
+      actionHref: "/contact",
+      icon: Truck,
+    },
+    "/cleaning": {
+      eyebrow: "COMMERCIAL CLEANING",
+      title: "A cleaner space for your team and visitors",
+      description: "Flexible cleaning for schools, nurseries, colleges, office buildings, and medical surgeries.",
+      actionLabel: "Discuss Your Cleaning Needs",
+      actionHref: "/contact",
+      icon: Sparkles,
+    },
+    "/contact": {
+      eyebrow: "GET IN TOUCH",
+      title: "How can we help?",
+      description: "Tell us about your move or cleaning requirements and our team will be in touch.",
+      actionLabel: "Call Us",
+      actionHref: "tel:+447496876085",
+      icon: Phone,
+    },
+  }[page];
   const [menuOpen, setMenuOpen] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -144,6 +198,16 @@ export default function App() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState("");
+
+  useEffect(() => {
+    const titles = {
+      "/": "Light touch removals — Moving with care across the UK",
+      "/moving": "Moving & Removals | Light touch removals",
+      "/cleaning": "Commercial Cleaning | Light touch removals",
+      "/contact": "Contact & Get a Quote | Light touch removals",
+    };
+    document.title = titles[page] || "Page Not Found | Light touch removals";
+  }, [page]);
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
@@ -189,10 +253,10 @@ export default function App() {
             ))}
           </nav>
           <a
-            href="#quote"
+            href="/contact"
             className="hidden rounded-full bg-[#1E7FE0] px-5 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[#1468BE] md:block"
           >
-            Get Free Quote
+            Get in Touch
           </a>
           <button className="md:hidden" onClick={() => setMenuOpen((o) => !o)} aria-label="Toggle menu">
             {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -212,17 +276,21 @@ export default function App() {
                 </a>
               ))}
               <a
-                href="#quote"
+                href="/contact"
                 onClick={() => setMenuOpen(false)}
                 className="mt-2 rounded-full bg-[#1E7FE0] px-5 py-2.5 text-center text-[14px] font-semibold text-white"
               >
-                Get Free Quote
+                Get in Touch
               </a>
             </div>
           </div>
         )}
       </header>
 
+      <main>
+      {pageHero && <PageHero {...pageHero} />}
+      {page === "/" && (
+      <>
       {/* Hero */}
       <section id="home" className="bg-[#F4F8FC]">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-2 md:py-20">
@@ -253,7 +321,7 @@ export default function App() {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="#quote"
+                href="/contact"
                 className="rounded-full bg-[#1E7FE0] px-6 py-3 text-[14.5px] font-semibold text-white shadow-sm shadow-blue-200 transition-colors hover:bg-[#1468BE]"
               >
                 Get Your Free Quote →
@@ -302,7 +370,37 @@ export default function App() {
         </div>
       </section>
 
+      <section className="mx-auto grid max-w-6xl gap-5 px-5 py-16 md:grid-cols-2">
+        {[
+          {
+            title: "Moving & Removals",
+            body: "Home and office moves with packing, careful transport, and placement.",
+            href: "/moving",
+            link: "Explore removals",
+          },
+          {
+            title: "Commercial Cleaning",
+            body: "Cleaning for schools, nurseries, colleges, office buildings, and medical surgeries.",
+            href: "/cleaning",
+            link: "Explore cleaning",
+          },
+        ].map((service) => (
+          <a
+            key={service.title}
+            href={service.href}
+            className="rounded-2xl border border-[#EDF1F7] bg-white p-7 transition-colors hover:border-[#D6E6FA]"
+          >
+            <h2 className="text-[20px] font-bold text-[#0B1D3A]">{service.title}</h2>
+            <p className="mt-2 text-[14px] leading-relaxed text-[#5B6785]">{service.body}</p>
+            <span className="mt-5 inline-block text-[14px] font-semibold text-[#1E7FE0]">{service.link} →</span>
+          </a>
+        ))}
+      </section>
+      </>
+      )}
+
       {/* Services */}
+      {page === "/moving" && (
       <section id="services" className="mx-auto max-w-6xl px-5 py-20">
         <div className="mx-auto max-w-xl text-center">
           <span className="inline-block rounded-full bg-[#E4F0FD] px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-[#1E7FE0]">
@@ -332,40 +430,6 @@ export default function App() {
           ))}
         </div>
 
-        <div className="mt-16 rounded-3xl bg-[#F4F8FC] px-6 py-10 sm:px-9">
-          <div className="mx-auto max-w-xl text-center">
-            <span className="inline-block rounded-full bg-[#E4F0FD] px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-[#1E7FE0]">
-              COMMERCIAL CLEANING
-            </span>
-            <h3 className="mt-4 text-[26px] font-extrabold text-[#0B1D3A] sm:text-[30px]">
-              Cleaning for Workplaces & Institutions
-            </h3>
-            <p className="mt-3 text-[15px] leading-relaxed text-[#5B6785]">
-              Flexible cleaning services for education, office, and healthcare environments. Get in touch to discuss
-              your site and schedule.
-            </p>
-          </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {CLEANING_SERVICES.map((s) => (
-              <div key={s.title} className="rounded-2xl border border-[#EDF1F7] bg-white p-6">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-[#E4F0FD]">
-                  <s.icon className="h-5 w-5 text-[#1E7FE0]" />
-                </div>
-                <h4 className="mt-4 text-[16px] font-bold text-[#0B1D3A]">{s.title}</h4>
-                <p className="mt-2 text-[14px] leading-relaxed text-[#5B6785]">{s.body}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-7 text-center">
-            <a
-              href="mailto:infolightouchmove@gmail.com?subject=Commercial%20Cleaning%20Enquiry"
-              className="inline-flex items-center gap-2 rounded-full bg-[#1E7FE0] px-6 py-3 text-[14.5px] font-semibold text-white transition-colors hover:bg-[#1468BE]"
-            >
-              <Sparkles className="h-4 w-4" /> Ask About Cleaning
-            </a>
-          </div>
-        </div>
-
         <div className="mt-16">
           <h3 className="text-center text-[19px] font-bold text-[#0B1D3A]">Explore All Moving Services</h3>
           <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -384,8 +448,48 @@ export default function App() {
           </div>
         </div>
       </section>
+      )}
+
+      {page === "/cleaning" && (
+        <section className="mx-auto max-w-6xl px-5 py-20">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-[26px] font-extrabold text-[#0B1D3A] sm:text-[30px]">
+              Cleaning for Workplaces & Institutions
+            </h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-[#5B6785]">
+              Discuss your site and schedule with us to find a cleaning service that suits your needs.
+            </p>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {CLEANING_SERVICES.map((s) => (
+              <div key={s.title} className="rounded-2xl border border-[#EDF1F7] bg-[#FAFBFD] p-7">
+                <div className="grid h-11 w-11 place-items-center rounded-xl bg-[#E4F0FD]">
+                  <s.icon className="h-5 w-5 text-[#1E7FE0]" />
+                </div>
+                <h2 className="mt-5 text-[16.5px] font-bold text-[#0B1D3A]">{s.title}</h2>
+                <p className="mt-2 text-[14px] leading-relaxed text-[#5B6785]">{s.body}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <a
+              href="mailto:infolightouchmove@gmail.com?subject=Commercial%20Cleaning%20Enquiry"
+              className="inline-flex items-center gap-2 rounded-full bg-[#1E7FE0] px-6 py-3 text-[14.5px] font-semibold text-white transition-colors hover:bg-[#1468BE]"
+            >
+              <Sparkles className="h-4 w-4" /> Ask About Cleaning
+            </a>
+            <a
+              href="/contact"
+              className="rounded-full border border-[#DCE3EE] bg-white px-6 py-3 text-[14.5px] font-semibold text-[#0B1D3A] transition-colors hover:bg-[#F4F8FC]"
+            >
+              Contact Us
+            </a>
+          </div>
+        </section>
+      )}
 
       {/* Process */}
+      {page === "/moving" && (
       <section id="how-it-works" className="bg-[#F4F8FC] py-20">
         <div className="mx-auto max-w-6xl px-5">
           <div className="mx-auto max-w-xl text-center">
@@ -412,17 +516,19 @@ export default function App() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Quote form */}
+      {page === "/contact" && (
       <section id="quote" className="bg-[#F4F8FC] py-20">
         <div className="mx-auto max-w-3xl px-5">
           <div className="text-center">
             <span className="inline-block rounded-full bg-[#E4F0FD] px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-[#1E7FE0]">
               GET A QUOTE
             </span>
-            <h2 className="mt-4 text-[30px] font-extrabold text-[#0B1D3A] sm:text-[34px]">Get Your Free Moving Quote</h2>
+            <h2 className="mt-4 text-[30px] font-extrabold text-[#0B1D3A] sm:text-[34px]">Tell Us What You Need</h2>
             <p className="mt-3 text-[15px] leading-relaxed text-[#5B6785]">
-              Tell us about your upcoming move and get a precise, customized estimate within 15 minutes.
+              Share your requirements and contact details, and we'll get back to you about your request.
             </p>
           </div>
 
@@ -516,10 +622,12 @@ export default function App() {
           </form>
         </div>
       </section>
+      )}
 
 
 
       {/* Reviews */}
+      {page === "/" && (
       <section id="reviews" className="bg-[#F4F8FC] py-20">
         <div className="mx-auto max-w-6xl px-5">
           <div className="mx-auto max-w-xl text-center">
@@ -553,8 +661,10 @@ export default function App() {
           </div>
         </div>
       </section>
+      )}
 
       {/* CTA */}
+      {page === "/" && (
       <section className="mx-auto max-w-6xl px-5 py-20">
         <div className="text-center">
           <span className="inline-block rounded-full bg-[#E4F0FD] px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-[#1E7FE0]">
@@ -586,11 +696,21 @@ export default function App() {
         </div>
 
       </section>
+      )}
+
+      {!["/", "/moving", "/cleaning", "/contact"].includes(page) && (
+        <section className="mx-auto max-w-3xl px-5 py-24 text-center">
+          <h1 className="text-[32px] font-extrabold text-[#0B1D3A]">Page not found</h1>
+          <p className="mt-3 text-[15px] text-[#5B6785]">The page you're looking for doesn't exist.</p>
+          <a href="/" className="mt-6 inline-block font-semibold text-[#1E7FE0]">Return home →</a>
+        </section>
+      )}
+      </main>
 
       {/* Footer */}
       <footer className="bg-[#0B1D3A] text-[#B9C4DC]">
         <div className="mx-auto max-w-6xl px-5 py-14">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
             <div>
               <p className="mt-4 max-w-[220px] text-[13px] leading-relaxed">
                 Providing removals and commercial cleaning services across London and Essex, England.
@@ -599,18 +719,18 @@ export default function App() {
             <div>
               <h4 className="text-[13.5px] font-bold text-white">Moving Services</h4>
               <ul className="mt-4 space-y-2.5 text-[13px]">
-                <li>Residential Moving</li>
-                <li>Office & Corporate Moving</li>
-                <li>Climate Storage</li>
-                <li>Specialized Packing</li>
+                <li><a href="/moving" className="hover:text-white">Residential Moving</a></li>
+                <li><a href="/moving" className="hover:text-white">Office & Corporate Moving</a></li>
+                <li><a href="/moving" className="hover:text-white">Climate Storage</a></li>
+                <li><a href="/moving" className="hover:text-white">Specialized Packing</a></li>
               </ul>
             </div>
             <div>
               <h4 className="text-[13.5px] font-bold text-white">Cleaning Services</h4>
               <ul className="mt-4 space-y-2.5 text-[13px]">
-                <li>Schools, Nurseries & Colleges</li>
-                <li>Office Buildings</li>
-                <li>Medical Surgeries</li>
+                <li><a href="/cleaning" className="hover:text-white">Schools, Nurseries & Colleges</a></li>
+                <li><a href="/cleaning" className="hover:text-white">Office Buildings</a></li>
+                <li><a href="/cleaning" className="hover:text-white">Medical Surgeries</a></li>
               </ul>
             </div>
             <div>
@@ -624,10 +744,10 @@ export default function App() {
               <h4 className="text-[13.5px] font-bold text-white">Contact Us</h4>
               <ul className="mt-4 space-y-2.5 text-[13px]">
                 <li className="flex items-center gap-2">
-                  <Phone className="h-3.5 w-3.5" /> +44 7496 876085
+                  <Phone className="h-3.5 w-3.5" /> <a href="tel:+447496876085">+44 7496 876085</a>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Mail className="h-3.5 w-3.5" /> infolightouchmove@gmail.com
+                  <Mail className="h-3.5 w-3.5" /> <a href="mailto:infolightouchmove@gmail.com">infolightouchmove@gmail.com</a>
                 </li>
               </ul>
             </div>
